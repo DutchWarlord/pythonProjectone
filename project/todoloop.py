@@ -1,15 +1,28 @@
 # functions
 
-user_prompt = "Enter a todo: "
+# def control_loop():
+#     while True:
+#         user_prompt = "Enter a todo: "
+#         todos = []
+#         sanitized = user_prompt.lower()
+#         if sanitized != "exit":
+#             todos.append(sanitized)
+#         else:
+#             print(todos)
+#             return False
 
-todos = []
 
-while True:
-    todo = input(user_prompt)
-    print(todo.capitalize())
-    todos.append(todo)
+def control_loop():
+    todos = []  # Move this outside of the loop
+    while True:
+        user_prompt = input("Enter a todo (or type 'exit' to quit): ")  # Get user input
+        sanitized = user_prompt.lower()
+        if sanitized == "exit":
+            break  # Exit the loop
+        todos.append(sanitized)  # Add the todo to the list
+
+    print(todos)  # Print the list of todos after exiting the loop
 
 
-# append - adds items to a list object
 
-# capitalize - capitalizes the first letter of the word
+control_loop()
