@@ -5,11 +5,12 @@ from unittest import case
 # Get Input Function
 def get_input():
     start = True
+    file1 = 'example.txt'
     todos = []
     while start:
         user_prompt = input("Please choose to add, print, edit or exit:  ")
         sanitized_input = user_prompt.lower()
-        todos, start = return_answer(todos, sanitized_input)
+        file1, start = return_answer(file1, sanitized_input)
     print("Here is your final list, goodbye: ")
     print_list(todos)
 
@@ -21,39 +22,41 @@ def get_input():
 # Determine Case Function
 # Options 1 - Add 2 - Print 3 - Quiet
 
-def return_answer(list, answer):
+def return_answer(file1, answer):
     selection = answer
     match selection:
         case 'add':
-            return add_item(list)
+            return add_item(file1)
         case 'print':
-            print_list(list)
-            return list, True
+            print_list(file1)
+            return file1, True
         case 'edit':
-            return edit_list(list)
+            return edit_list(file1)
         case 'exit':
             print("Here is your to do list:")
-            return list, False
+            return file1, False
         case _:
             print("Your entry did not match one of the options. Please try again.")
-            return list, True
+            return file1, True
 
 
 # Add function
 # Added Loop to continue adding another rather than returning
-def add_item(list):
+def add_item(file1):
     status = True
     while status:
         todo = input("Enter a new To Do Item: ")
-        list.append(todo)
+        with open(file1, 'a') as file:
+            file.write(str(todo) + '\n')
         question = input("Would you like to add another? Y/N ")
         if question.upper() == 'N':
             status = False
-    return list, True
+    return file1, True
 
 
 # Edit Function
 # Pass ToDo List / Select Item / Edit or delete item?
+# Edit for File I will need to pass it to a list
 def edit_list(list):
     print("Here is your list: ")
     print_list(list)
@@ -70,12 +73,15 @@ def edit_list(list):
 
 
 # For Loop Function
-def print_list(list):
+def print_list(file1):
+    with open(file1, 'r') as file:
+        content = file.read()
+        print(content)
     # added a counter
-    counter = 1
-    for x in list:
-        print(counter, x)
-        counter += 1
+    # counter = 1
+    # for x in list:
+    #     print(counter, x)
+    #     counter += 1
 
 
 get_input()
