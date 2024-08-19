@@ -68,7 +68,8 @@ def edit_list(file1):
         lines = file.readlines()
         lines_length = len(lines)
         while number > lines_length - 1 or number < 0:
-            number = input("That number wasn't present on the list. Please enter another: ")
+            entry = input("That number wasn't present on the list. Please enter another: ")
+            number = int(entry)
         new_entry = input("Please type your new entry: ")
         lines[number] = new_entry + '\n'
         with open(file1, 'w') as file:
