@@ -6,13 +6,12 @@ from unittest import case
 def get_input():
     start = True
     file1 = 'example.txt'
-    todos = []
     while start:
         user_prompt = input("Please choose to add, print, edit or exit:  ")
         sanitized_input = user_prompt.lower()
         file1, start = return_answer(file1, sanitized_input)
     print("Here is your final list, goodbye: ")
-    print_list(todos)
+    print_list(file1)
 
 
 # Sanitize Input Function
@@ -57,27 +56,40 @@ def add_item(file1):
 # Edit Function
 # Pass ToDo List / Select Item / Edit or delete item?
 # Edit - Take file, write to list, present items, edit list, re-write list to file
+# Ensure items can be selected by name?
 def edit_list(file1):
     print("Here is your list: ")
     print_list(file1)
-    number = input("Please select which item to edit")
-    # compare while statement forcing a number
-    while int(number) >= len(list) + 1:
-        print("You did not enter a valid number. Please try again")
-        number = input("Please enter the numbered item to edit")
-    edit_variable = input("Please enter your new variable")
-    #list.insert(int(number)-1, edit_variable)
-    list[int(number) - 1] = edit_variable
-    return list, True
+    entry = input("Please select which item to edit")
+    number = int(entry)
+    # I need to read out a particular line, and then edit, and re-insert it.
+    # I could even add an if else statement to determine whether string / number
+    with open(file1, 'r') as file:
+        lines = file.readlines()
+        lines_length = len(lines)
+        while number > lines_length - 1 or number < 0:
+            number = input("That number wasn't present on the list. Please enter another: ")
+        new_entry = input("Please type your new entry: ")
+        lines[number] = new_entry + '\n'
+        with open(file1, 'w') as file:
+            file.writelines(lines)
+    print("The list has been updated")
+    # while int(number) >= len(list):
+    #     print("You did not enter a valid number. Please try again")
+    #     number = input("Please enter the numbered item to edit")
+    # edit_variable = input("Please enter your new variable")
+    # # list.insert(int(number)-1, edit_variable)
+    # list[int(number)] = edit_variable
+    return file1, True
 
 
 # For Loop Function
 def print_list(file1):
-    #open and read file
+    # open and read file
     with open(file1, 'r') as file:
-        #enumerate over the lines to get index and content
+        # enumerate over the lines to get index and content
         for index, line in enumerate(file):
-            #print the content items line by line
+            # print the content items line by line
             print(f"{index} : {line.strip()}")
     # added a counter
     # counter = 1
@@ -85,5 +97,7 @@ def print_list(file1):
     #     print(counter, x)
     #     counter += 1
 
+
+# Advanced challenge - Re-order items!
 
 get_input()
