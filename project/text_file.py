@@ -56,12 +56,11 @@ def add_item(file1):
 
 # Edit Function
 # Pass ToDo List / Select Item / Edit or delete item?
-# Edit for File I will need to pass it to a list
-def edit_list(list):
+# Edit - Take file, write to list, present items, edit list, re-write list to file
+def edit_list(file1):
     print("Here is your list: ")
-    print_list(list)
+    print_list(file1)
     number = input("Please select which item to edit")
-    # note - I have no way to catch an error yet
     # compare while statement forcing a number
     while int(number) >= len(list) + 1:
         print("You did not enter a valid number. Please try again")
@@ -74,9 +73,12 @@ def edit_list(list):
 
 # For Loop Function
 def print_list(file1):
+    #open and read file
     with open(file1, 'r') as file:
-        content = file.read()
-        print(content)
+        #enumerate over the lines to get index and content
+        for index, line in enumerate(file):
+            #print the content items line by line
+            print(f"{index} : {line.strip()}")
     # added a counter
     # counter = 1
     # for x in list:
