@@ -6,14 +6,30 @@
 from unittest import case
 
 
-# verify file exists
+# verify file path exists
 def verify_file(file_path):
+    """
+Verify if the file exists at the given file path.
+
+Args:
+    file_path (str): The path to the file.
+
+Returns:
+    bool: True if the file exists, False otherwise.
+"""
+    if not isinstance(file_path, str):
+        print("Error: The file path must be a string.")
+        return False
     if not os.path.isfile(file_path):
         print("File not found")
-        return false
+        return False
+    return True
 
 # Get Input Function
 def get_input():
+    """
+    Get user input to add, print, edit, or exit the to-do list.
+    """
     start = True
     file1 = 'example.txt'
     if not verify_file(file1):
@@ -35,6 +51,16 @@ def get_input():
 # Options 1 - Add 2 - Print 3 - Quiet
 
 def return_answer(file1, answer):
+    """
+    Determine the action to take based on user input.
+    
+    Args:
+        file1 (str): The file path.
+        answer (str): The user input.
+    
+    Returns:
+        tuple: The file path and a boolean indicating whether to continue.
+    """
     selection = answer
     match selection:
         case 'add':
@@ -55,6 +81,15 @@ def return_answer(file1, answer):
 # Add function
 # Added Loop to continue adding another rather than returning
 def add_item(file1):
+    """
+    Add an item to the to-do list.
+    
+    Args:
+        file1 (str): The file path.
+    
+    Returns:
+        tuple: The file path and a boolean indicating whether to continue.
+    """
     status = True
     while status:
         todo = input("Enter a new To Do Item: ")
@@ -71,6 +106,15 @@ def add_item(file1):
 # Edit - Take file, write to list, present items, edit list, re-write list to file
 # Ensure items can be selected by name?
 def edit_list(file1):
+    """
+    Edit the to-do list.
+    
+    Args:
+        file1 (str): The file path.
+    
+    Returns:
+        tuple: The file path and a boolean indicating whether to continue.
+    """
     print("Here is your list: ")
     print_list(file1)
     entry = input("Please select which item to edit")
@@ -99,6 +143,12 @@ def edit_list(file1):
 
 # For Loop Function
 def print_list(file1):
+    """
+    Print the to-do list.
+    
+    Args:
+        file1 (str): The file path.
+    """
     # open and read file
     with open(file1, 'r') as file:
         # enumerate over the lines to get index and content
